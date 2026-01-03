@@ -1,47 +1,77 @@
-*{
-    margin: 0;
-    padding: 0;
-}
-body{
-    background-color: rgb(158, 207, 223);
-    text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.container{
-    height: 70vh;
-    display: flex;
-    
-    justify-content: center;
-    align-content: center;
-
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #1d2671, #c33764);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.game{
-    height: 60vmin;
-    width: 60vmin;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: center;
-    gap: 1.5vmin;
+main {
+  text-align: center;
 }
 
-.box{
-    height: 18vmin;
-    width: 18vmin;
-    font-size: 8vmin;
-    color: rgb(186, 6, 6);
-    background-color: rgb(236, 215, 240);
-    border-radius: 1rem;
-    border: none;
-    box-shadow: 0 0 1rem rgba(0,0,0,0.1);
+h1 {
+  color: #fff;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
 }
 
-#reset-btn{
-    padding: 1rem;
-    font-size: 1.25rem;
-    background-color: rgba(39, 63, 18, 0.683);
-    color: aliceblue;
-    border-radius: 1rem;
-    border: none;
+.container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.game {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 10px;
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  font-size: 3rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 12px;
+  border: none;
+  background-color: #ffffff;
+  color: #1d2671;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.box:hover:not(:disabled) {
+  background-color: #f2f2f2;
+  transform: scale(1.05);
+}
+
+.box:disabled {
+  cursor: not-allowed;
+  opacity: 0.9;
+}
+
+#reset-btn {
+  padding: 12px 25px;
+  font-size: 1rem;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background-color: #ffffff;
+  color: #c33764;
+  font-weight: bold;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#reset-btn:hover {
+  background-color: #f2f2f2;
+  transform: scale(1.05);
 }
