@@ -1,10 +1,14 @@
 const boxes = document.querySelectorAll(".box");
 const resetBtn = document.getElementById("reset-btn");
 
-let turnO = true; // true = O's turn, false = X's turn
+let turnO = true;
 let gameOver = false;
 
-// Winning patterns (index-based)
+// Create status message dynamically
+const statusText = document.createElement("h2");
+statusText.classList.add("status");
+document.querySelector("main").appendChild(statusText);
+
 const winPatterns = [
   [0, 1, 2],
   [3, 4, 5],
@@ -16,17 +20,21 @@ const winPatterns = [
   [2, 4, 6],
 ];
 
-// Initialize game (clear preset X/O from HTML)
 const initGame = () => {
   turnO = true;
   gameOver = false;
+  statusText.innerText = "Player O's turn";
   boxes.forEach((box) => {
     box.innerText = "";
     box.disabled = false;
+    box.classList.remove("win");
   });
 };
 
-// Check winner
+const disableBoxes = () => {
+  boxes.forEach((box) => (box.disabled = true));
+};
+
 const checkWinner = () => {
   for (let pattern of winPatterns) {
     const [a, b, c] = pattern;
@@ -36,49 +44,41 @@ const checkWinner = () => {
 
     if (val1 && val1 === val2 && val2 === val3) {
       gameOver = true;
-      setTimeout(() => {
-        alert(`Player ${val1} wins!`);
-      }, 100);
+      statusText.innerText = `🎉 Player ${val1} Wins!`;
+      boxes[a].classList.add("win");
+      boxes[b].classList.add("win");
+      boxes[c].classList.add("win");
       disableBoxes();
       return;
     }
   }
 
-  // Check draw
   const isDraw = [...boxes].every((box) => box.innerText !== "");
-  if (isDraw && !gameOver) {
+  if (isDraw) {
     gameOver = true;
-    setTimeout(() => {
-      alert("It's a draw!");
-    }, 100);
+    statusText.innerText = "🤝 It's a Draw!";
   }
 };
 
-// Disable all boxes
-const disableBoxes = () => {
-  boxes.forEach((box) => (box.disabled = true));
-};
-
-// Box click logic
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
     if (gameOver) return;
 
     if (turnO) {
       box.innerText = "O";
+      box.classList.add("o");
+      statusText.innerText = "Player X's turn";
     } else {
       box.innerText = "X";
+      box.classList.add("x");
+      statusText.innerText = "Player O's turn";
     }
 
     box.disabled = true;
     turnO = !turnO;
-
     checkWinner();
   });
 });
 
-// Reset button
 resetBtn.addEventListener("click", initGame);
-
-// Start fresh on page load
 initGame();
